@@ -22,7 +22,17 @@ export default function TodoList() {
   };
 
   useEffect(() => {
-    void loadTodos();
+    let ignore = false;
+
+    void fetchTodos().then((data) => {
+      if (!ignore) {
+        setTodos(data);
+      }
+    });
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const visible = sortTodosByPriority(
