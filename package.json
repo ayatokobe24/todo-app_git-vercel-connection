@@ -8,7 +8,9 @@
     "dev:staging": "dotenv -e .env.staging -- next dev",
     "dev:prod": "dotenv -e .env.production -- next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.115.0",
@@ -21,6 +23,8 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "dotenv-cli": "^11.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "^16.3.4",
     "typescript": "^5.9.3"
   }
 }

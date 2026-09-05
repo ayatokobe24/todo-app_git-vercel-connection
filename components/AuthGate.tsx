@@ -1,28 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AuthForm from "@/components/AuthForm";
 import TodoForm from "@/components/TodoForm";
 import TodoList from "@/components/TodoList";
 import UserMenu from "@/components/UserMenu";
 import { useSupabaseUser } from "@/hooks/useSupabaseUser";
 
-const STATS_KEY = "todo-app.stats";
 const XP_PER_LEVEL = 50;
 const RANKS = ["見習い", "冒険者", "斥候", "騎士", "英雄", "伝説"];
-
-function loadStats() {
-  try {
-    const raw = localStorage.getItem(STATS_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as { xp?: number };
-      if (typeof parsed.xp === "number") return parsed as { xp: number };
-    }
-  } catch {
-    /* ignore */
-  }
-  return { xp: 0 };
-}
 
 function rankFor(level: number) {
   return RANKS[Math.min(level - 1, RANKS.length - 1)];
@@ -30,12 +16,8 @@ function rankFor(level: number) {
 
 export default function AuthGate() {
   const { user, loading } = useSupabaseUser();
-  const [stats, setStats] = useState({ xp: 0 });
+  const [stats] = useState({ xp: 0 });
   const [refreshKey, setRefreshKey] = useState(0);
-
-  useEffect(() => {
-    setStats(loadStats());
-  }, []);
 
   if (loading) return <p className="empty">読み込み中…</p>;
 
